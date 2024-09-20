@@ -25,22 +25,15 @@ const getPedidosByUser = async (req, res) => {
         Recordar que para cumplir con toda la funcionalidad deben:
 
             1. Utilizar el servicio de pedidos para obtener los pedidos del usuario
-            2. Si el usuario no tiene pedidos, devolver un mensaje de error (status 404)
+            2. Si el usuario no tiene pedidos, devolver una lista vacía (status 200)
             3. Si el usuario tiene pedidos, devolver un json con los pedidos (status 200)
             4. Devolver un mensaje de error si algo falló (status 500)
         
     */
    try {
     const userid = req.userId;
-    console.log("userid",userid);
-    const pedidoByUser = await pedidosService.getPedidosByUser(userid.id);
-    console.log("pbu", pedidoByUser);
-    if (!pedidoByUser) {
-        return res.status(404).json({ error: 'El usuario no tiene pedidos'})
-    }
-    else {
-        return res.status(200).json({ message: pedidoByUser})
-    }
+    const pedidoByUser = await pedidosService.getPedidosByUser(userid);
+    return res.status(200).json({ message: pedidoByUser});
    }
    catch (err){
     console.error(err)
